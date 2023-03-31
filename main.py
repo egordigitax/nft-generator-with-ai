@@ -12,7 +12,6 @@ class AssetStorage:
 
     def __init__(self):
         traits = sorted(os.listdir('sources'))
-        print(traits)
         for trait in traits:
             self.assets.update({
                 trait: [Path(f'sources/{trait}/{item}') for item in os.listdir(Path(f'sources/{trait}'))]
@@ -55,4 +54,4 @@ im = NFTImage()
 
 new_nft_img = im.generate()
 new_nft_img.save('new.png')
-print(im.enchance_with_ai())
+print(im.enhance_with_ai())
