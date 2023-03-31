@@ -44,8 +44,8 @@ class NFTImage:
         else:
             return image
 
-    def enchance_with_ai(self):
-
+    @staticmethod
+    def enhance_with_ai():
         payload = {"init_images": [str(Path('new.png').absolute())], "prompt": "anime girl"}
         r = requests.request("POST", 'http://127.0.0.1:7860/sdapi/v1/img2img', data=json.dumps(payload))
         return r.json()
@@ -55,4 +55,4 @@ im = NFTImage()
 
 new_nft_img = im.generate()
 new_nft_img.save('new.png')
-print(im.enchance_with_ai())
+print(im.enhance_with_ai())
