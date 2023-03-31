@@ -45,8 +45,8 @@ class NFTImage:
             return image
 
     def enchance_with_ai(self):
-
         payload = {"init_images": [str(Path('new.png').absolute())], "prompt": "anime girl"}
+        print(json.dumps(payload))
         r = requests.request("POST", 'http://127.0.0.1:7860/sdapi/v1/img2img', data=json.dumps(payload))
         return r.json()
 
