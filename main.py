@@ -48,7 +48,10 @@ class NFTImage:
     def enhance_with_ai(self):
         image = self.generate()
         img_base64 = self._image_to_base64(image)
-        payload = {"init_images": [img_base64], "prompt": "anime girl"}
+        with open('payload.json', "rb") as json_payload:
+            payload = json.load(json_payload)
+        payload['init_images'] = [img_base64]
+        payload['prompt'] = "anime girl"
         print(json.dumps(payload))
         r = requests.request("POST", 'http://127.0.0.1:7860/sdapi/v1/img2img', data=json.dumps(payload))
         return r.json()
@@ -56,9 +59,11 @@ class NFTImage:
     @staticmethod
     def _image_to_base64(image):
         buffered = BytesIO()
-        image.save(buffered, format="JPEG")
-        img_str = base64.b64encode(buffered.getvalue())
-        return img_str
+        image.save(buffered, format="PNG")
+        img_bytes = base64.b64encode(buffered.getvalue())
+        return str(img_bytes)
 
 im = NFTImage()
 print(im.enhance_with_ai())
+#Stable Diffusion API не может раскодировать base64 изображение и харкается
+#{'detail': 'Invalid encoded image'}
