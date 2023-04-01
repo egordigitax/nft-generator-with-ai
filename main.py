@@ -5,7 +5,7 @@ from io import BytesIO
 from pathlib import Path
 
 import requests as requests
-from PIL import Image
+from PIL import Image, PngImagePlugin
 import os
 
 
@@ -60,11 +60,7 @@ class NFTImage:
 
     @staticmethod
     def _image_to_base64(image):
-        msg = b"<plain_txt_msg:img>"
-        buffered = BytesIO()
-        image.save(buffered, format="PNG")
-        img_bytes = base64.b64encode(buffered.getvalue()).decode()
-        return img_bytes
+        return encode_pil_to_base64(image)
 
 
 im = NFTImage()
@@ -72,3 +68,18 @@ print(im.generate_with_ai())
 
 # Stable Diffusion API не может раскодировать base64 изображение и харкается
 # {'detail': 'Invalid encoded image'}
+def encode_pil_to_base64(image):
+    with BytesIO() as output_bytes:
+
+        if True:
+            use_metadata = False
+            metadata = PngImagePlugin.PngInfo()
+            for key, value in image.info.items():
+                if isinstance(key, str) and isinstance(value, str):
+                    metadata.add_text(key, value)
+                    use_metadata = True
+            image.save(output_bytes, format="PNG", pnginfo=(metadata if use_metadata else None), quality=opts.jpeg_quality)
+
+        bytes_data = output_bytes.getvalue()
+
+    return base64.b64encode(bytes_data)
