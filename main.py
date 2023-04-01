@@ -55,14 +55,16 @@ class NFTImage:
         print(json.dumps(payload))
         r = requests.request("POST", 'https://9317831c-08c0-41b4.gradio.live/sdapi/v1/img2img',
                              data=json.dumps(payload))
+        print(r)
         return r.json()
 
     @staticmethod
     def _image_to_base64(image):
+        msg = b"<plain_txt_msg:img>"
         buffered = BytesIO()
         image.save(buffered, format="PNG")
-        img_bytes = base64.b64encode(buffered.getvalue())
-        return str(img_bytes)
+        img_bytes = base64.b64encode(buffered.getvalue()).decode()
+        return img_bytes
 
 
 im = NFTImage()
