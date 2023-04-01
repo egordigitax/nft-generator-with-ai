@@ -66,7 +66,7 @@ class NFTImage:
 
 
 im = NFTImage()
-print(im.enhance_with_ai())
+print(im.generate_with_ai())
 
 # Stable Diffusion API не может раскодировать base64 изображение и харкается
 # {'detail': 'Invalid encoded image'}
