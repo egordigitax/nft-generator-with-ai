@@ -45,7 +45,7 @@ class NFTImage:
         else:
             return image
 
-    def enhance_with_ai(self):
+    def generate_with_ai(self):
         image = self.generate()
         img_base64 = self._image_to_base64(image)
         payload = {"init_images": [img_base64], "prompt": "anime girl"}
@@ -60,5 +60,6 @@ class NFTImage:
         img_str = base64.b64encode(buffered.getvalue())
         return img_str
 
+
 im = NFTImage()
-print(im.enhance_with_ai())
+print(im.generate_with_ai())
