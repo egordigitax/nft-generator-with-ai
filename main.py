@@ -53,7 +53,7 @@ class NFTImage:
         payload['init_images'] = [img_base64]
         payload['prompt'] = "anime girl"
         print(json.dumps(payload))
-        r = requests.request("POST", 'http://127.0.0.1:7860/sdapi/v1/img2img', data=json.dumps(payload))
+        r = requests.request("POST", 'https://9317831c-08c0-41b4.gradio.live/sdapi/v1/img2img', data=json.dumps(payload))
         return r.json()
 
     @staticmethod
